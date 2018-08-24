@@ -1,4 +1,4 @@
-var wordArray = ["fender", "gibson", "grestch","musicman","ibanez","prs","charvel"];
+var wordArray = ["fender", "gibson", "grestch","suhr","ibanez","prs","charvel"];
 
 var hgame = {
     "rWord": wordArray[Math.floor(Math.random()*wordArray.length)],
@@ -49,6 +49,7 @@ var hgame = {
             var newDiv = document.createElement("div");
             newDiv.textContent = letter+" , ";
             targetDiv.appendChild(newDiv);
+            newDiv.setAttribute("class", "shown");  
                
 
         }       
@@ -58,23 +59,34 @@ var hgame = {
             if (hgame.arrGood.length == hgame.rWord.length){
             hgame.score++;
             document.getElementById("score").innerHTML = this.score;
-            console.log(hgame.score);
-            hgame.confim1r();
+            //console.log(hgame.score);
+            document.getElementById("btn-continue").style.display = "block";
+            
             
 
         }
     },
     
     "continue" : function () {
+       
         this.rWord = wordArray[Math.floor(Math.random()*wordArray.length)];
         this.life = 13;
+        document.getElementById("life1").innerHTML = 13;
+        document.getElementById("life").innerHTML = "";
+        document.getElementById("letters").innerHTML = " ";
         this.arrBad = [];
-        this.arrGood = [];
+        this.arrGood = []; 
+        
+        hgame.divAppend();
+        document.getElementById("btn-continue").style.display = "none";
     },
  
     "restart" : function (){
+        
         hgame.continue();
-        this.score = 0;
+        //hgame.rWord = wordArray[Math.floor(Math.random()*wordArray.length)];
+        document.getElementById("score").innerHTML = 0;
+        hgame.score = 0;
     },
     
     "divAppend": function () {
@@ -89,11 +101,11 @@ var hgame = {
             newDiv.setAttribute("id", "letter"+ k); 
             newDiv.setAttribute("class", "hidden" );   
         }
-    },
-    "confim1r": function(recieve) {
-        var x = confirm("continue?");
-        
     }
+   // "confim1r": function(recieve) {
+   //   var x = confirm("continue?");
+        
+   // }
 };
 
 hgame.divAppend();
@@ -101,14 +113,23 @@ hgame.divAppend();
 document.onkeypress = function(event){
     if(hgame.life > 0){
     var key = event.key;
-    console.log(event.key);
+    //console.log(event.key);
     hgame.compare(key);
     hgame.winCalc();
-    console.log(hgame.score);
+    //console.log(hgame.score);
     
 }
 else {
-    alert("Game Over");     
+    alert("Game Over");
+    hgame.restart();     
 }
     
 };
+
+document.getElementById("btn-continue").addEventListener("click", function() {
+    hgame.continue();
+});
+
+document.getElementById("restartBttn").addEventListener("click", function() {
+    hgame.restart();
+});
