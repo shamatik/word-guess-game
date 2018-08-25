@@ -56,14 +56,23 @@ var hgame = {
     },
     
     "winCalc" : function () {
-            if (hgame.arrGood.length == hgame.rWord.length){
+        
+        var scoreIncrease = 0;
+
+        hgame.arrGood.forEach(element => {
+
+            if(element){
+                scoreIncrease++;
+            }      
+            
+
+        });    
+        
+        if (scoreIncrease == hgame.rWord.length){
             hgame.score++;
             document.getElementById("score").innerHTML = this.score;
             //console.log(hgame.score);
             document.getElementById("btn-continue").style.display = "block";
-            
-            
-
         }
     },
     
@@ -109,6 +118,7 @@ var hgame = {
 };
 
 hgame.divAppend();
+console.log(hgame.rWord);
 
 document.onkeypress = function(event){
     if(hgame.life > 0){
@@ -116,7 +126,7 @@ document.onkeypress = function(event){
     //console.log(event.key);
     hgame.compare(key);
     hgame.winCalc();
-    //console.log(hgame.score);
+    
     
 }
 else {
